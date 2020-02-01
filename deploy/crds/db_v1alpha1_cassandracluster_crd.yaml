@@ -12,7 +12,6 @@ spec:
   scope: Namespaced
   validation:
     openAPIV3Schema:
-      description: CassandraCluster is the Schema for the cassandraclusters API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -27,7 +26,6 @@ spec:
         metadata:
           type: object
         spec:
-          description: CassandraClusterSpec defines the configuration of CassandraCluster
           properties:
             autoPilot:
               description: AutoPilot defines if the Operator can fly alone or if we
@@ -111,8 +109,6 @@ spec:
               format: int32
               type: integer
             pod:
-              description: PodPolicy defines the policy for pods owned by CassKop
-                operator.
               properties:
                 annotations:
                   additionalProperties:
@@ -166,8 +162,6 @@ spec:
               minimum: 1
               type: integer
             service:
-              description: PodPolicy defines the policy for headless service owned
-                by CassKop operator.
               properties:
                 annotations:
                   additionalProperties:
@@ -231,6 +225,10 @@ spec:
                     type: object
                   type: array
               type: object
+            unlockNextOperation:
+              description: Very special Flag to hack CassKop reconcile loop - use
+                with really good Care
+              type: boolean
           type: object
         status:
           properties:
@@ -241,12 +239,12 @@ spec:
                     description: 'CassandraLastAction is the set of Cassandra State
                       & Actions: Active, Standby..'
                     properties:
-                      Name:
-                        description: 'Type d''action a effectuer : UpdateVersion,
-                          UpdateBaseImage, UpdateConfigMap..'
-                        type: string
                       endTime:
                         format: date-time
+                        type: string
+                      name:
+                        description: 'Type of action to perform : UpdateVersion, UpdateBaseImage,
+                          UpdateConfigMap..'
                         type: string
                       startTime:
                         format: date-time
@@ -272,10 +270,10 @@ spec:
                     description: PodLastOperation manage status for Pod Operation
                       (nodetool cleanup, upgradesstables..)
                     properties:
-                      Name:
-                        type: string
                       endTime:
                         format: date-time
+                        type: string
+                      name:
                         type: string
                       operatorName:
                         description: Name of operator
